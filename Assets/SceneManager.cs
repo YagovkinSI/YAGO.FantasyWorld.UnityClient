@@ -1,23 +1,44 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
-public class Checking : MonoBehaviour
+public class SceneManager : MonoBehaviour
 {
+    private const string SERVER_URL = "https://yagoworld.ru";
+
+    [SerializeField] private TMP_InputField _login;
+    [SerializeField] private TMP_InputField _password;
+    [SerializeField] private TMP_InputField _confirmPassword;
+
     [SerializeField] private GameObject textMeshProObject;
 
-    public void OnCheckClick()
+    public void Awake()
     {
         string url = "https://yagoworld.ru/Authorization/getCurrentUser";
         StartCoroutine(GetRequestToServer(url));
     }
 
+    private class LoginRequest
+    {
+        public string UserName;
+        public string Password;
+    }
+
     public void OnLoginClick()
     {
-        string url = "https://yagoworld.ru/Authorization/login";
-        string jsonData = "{ \"userName\": \"Test\",\"password\": \"Qqwe!123\"}";
+        var data = new LoginRequest { UserName = _login.text, Password = _password.text };
+        string jsonData = JsonUtility.ToJson(data);
+        string url = $"{SERVER_URL}/Authorization/login";
         StartCoroutine(PostRequestToServer(url, jsonData));
+    }
+
+    public void OnCheckClick()
+    {
+        string url = "https://yagoworld.ru/Authorization/getCurrentUser";
+        StartCoroutine(GetRequestToServer(url));
     }
 
     private IEnumerator GetRequestToServer(string url)
