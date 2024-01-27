@@ -9,16 +9,19 @@ public class SceneManager : MonoBehaviour
 {
     private const string SERVER_URL = "https://yagoworld.ru";
 
+    [SerializeField] private GameObject _loading;
+
     [SerializeField] private TMP_InputField _login;
     [SerializeField] private TMP_InputField _password;
     [SerializeField] private TMP_InputField _confirmPassword;
 
     [SerializeField] private GameObject textMeshProObject;
 
-    public void Awake()
+    public void Start()
     {
         string url = "https://yagoworld.ru/Authorization/getCurrentUser";
         StartCoroutine(GetRequestToServer(url));
+        _loading.SetActive(false);
     }
 
     private class LoginRequest
