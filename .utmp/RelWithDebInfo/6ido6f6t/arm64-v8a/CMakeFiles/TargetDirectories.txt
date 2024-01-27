@@ -1,0 +1,5 @@
+C:/Users/scorp/source/repos/YAGO.FantasyWorld.UnityClient/.utmp/RelWithDebInfo/6ido6f6t/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/scorp/source/repos/YAGO.FantasyWorld.UnityClient/.utmp/RelWithDebInfo/6ido6f6t/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Users/scorp/source/repos/YAGO.FantasyWorld.UnityClient/.utmp/RelWithDebInfo/6ido6f6t/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+C:/Users/scorp/source/repos/YAGO.FantasyWorld.UnityClient/.utmp/RelWithDebInfo/6ido6f6t/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+C:/Users/scorp/source/repos/YAGO.FantasyWorld.UnityClient/.utmp/RelWithDebInfo/6ido6f6t/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir
