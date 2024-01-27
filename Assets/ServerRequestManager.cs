@@ -7,24 +7,21 @@ public class ServerRequestManager : MonoBehaviour
 {
     private const string SERVER_URL = "https://yagoworld.ru";
 
-    [SerializeField] private GameObject _loading;
-
     public enum RequestType
     {
         Get,
         Post
     }
 
-    public void SendGetRequest(string url, bool isFreezinigRequest, Action<string> successAction, Action<string> errorAction) 
-        => StartCoroutine(SendRequest(RequestType.Get, url, null, isFreezinigRequest, successAction, errorAction));
+    public void SendGetRequest(string url, Action<bool> loadingAction, Action<string> successAction, Action<string> errorAction)
+        => StartCoroutine(SendRequest(RequestType.Get, url, null, loadingAction, successAction, errorAction));
 
-    public void SendPostRequest(string url, string jsinData, bool isFreezinigRequest, Action<string> successAction, Action<string> errorAction) 
-        => StartCoroutine(SendRequest(RequestType.Post, url, jsinData, isFreezinigRequest, successAction, errorAction));
+    public void SendPostRequest(string url, string jsinData, Action<bool> loadingAction, Action<string> successAction, Action<string> errorAction)
+        => StartCoroutine(SendRequest(RequestType.Post, url, jsinData, loadingAction, successAction, errorAction));
 
-    private IEnumerator SendRequest(RequestType requestType, string url, string jsonData, bool isFreezinigRequest, Action<string> successAction, Action<string> errorAction)
+    private IEnumerator SendRequest(RequestType requestType, string url, string jsonData, Action<bool> loadingAction, Action<string> successAction, Action<string> errorAction)
     {
-        if (isFreezinigRequest)
-            _loading.SetActive(true);
+        loadingAction(true);
 
         switch (requestType)
         {
@@ -36,8 +33,7 @@ public class ServerRequestManager : MonoBehaviour
                 break;
         }
 
-        if (isFreezinigRequest)
-            _loading.SetActive(false);
+        loadingAction(false);
     }
 
     private IEnumerator InnerSendGetRequest(string url, Action<string> successAction, Action<string> errorAction)
@@ -53,7 +49,7 @@ public class ServerRequestManager : MonoBehaviour
             }
             else
             {
-                errorAction(webRequest.error);
+                errorAction(webRequest.downloadHandler.text);
             }
         }
     }
@@ -76,7 +72,7 @@ public class ServerRequestManager : MonoBehaviour
             }
             else
             {
-                errorAction(webRequest.error);
+                errorAction(webRequest.downloadHandler.text);
             }
         }
     }
