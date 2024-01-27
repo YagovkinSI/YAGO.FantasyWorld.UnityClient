@@ -1,8 +1,5 @@
-﻿public partial class LoginMenuScript
+﻿public class LoginRequest
 {
-    private class LoginRequest
-    {
-        public string UserName;
-        public string Password;
-    }
+    public string UserName;
+    public string Password;
 }

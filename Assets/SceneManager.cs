@@ -13,6 +13,7 @@ public class SceneManager : MonoBehaviour
     [SerializeField] private GameObject _error;
 
     [SerializeField] private LoginMenuScript _loginMenu;
+    [SerializeField] private RegisterMenuScript _registerMenu;
     [SerializeField] private GameObject textMeshProObject;
     public AuthorizationData AuthorizationData { get; private set; }
     private readonly List<string> _loadings = new();
@@ -22,6 +23,10 @@ public class SceneManager : MonoBehaviour
         _loginMenu.OnLoadingChanged += LoadingChange;
         _loginMenu.OnLogined += SetAuthorizationData;
         _loginMenu.OnError += ShowError;
+
+        _registerMenu.OnLoadingChanged += LoadingChange;
+        _registerMenu.OnRegistred += SetAuthorizationData;
+        _registerMenu.OnError += ShowError;
 
         _serverRequestManager.SendGetRequest(
             "Authorization/getCurrentUser",
