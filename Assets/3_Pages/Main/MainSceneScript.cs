@@ -1,5 +1,3 @@
-using Assets.Models;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -7,55 +5,18 @@ using UnityEngine;
 
 public class MainSceneScript : MonoBehaviour
 {
-    [SerializeField] private ServerRequestManager _serverRequestManager;
-
     [SerializeField] private GameObject _loading;
     [SerializeField] private GameObject _error;
 
-    [SerializeField] private LoginMenuScript _loginMenu;
-    [SerializeField] private RegisterMenuScript _registerMenu;
-    [SerializeField] private GameObject textMeshProObject;
-    public AuthorizationData AuthorizationData { get; private set; }
+    [SerializeField] private UserWidgetScript _user;
+
     private readonly List<string> _loadings = new();
 
     private void Start()
     {
-        _loginMenu.OnLoadingChanged += LoadingChange;
-        _loginMenu.OnLogined += SetAuthorizationData;
-        _loginMenu.OnError += ShowError;
-
-        _registerMenu.OnLoadingChanged += LoadingChange;
-        _registerMenu.OnRegistred += SetAuthorizationData;
-        _registerMenu.OnError += ShowError;
-
-        _serverRequestManager.SendGetRequest(
-            "Authorization/getCurrentUser",
-            StartLoading,
-            SetAuthorizationData,
-            ShowError
-        );
-    }
-
-    private void StartLoading(bool state) => LoadingChange("SceneStart", state);
-
-    public void SetAuthorizationData(string jsonData)
-    {
-        var authorizationData = JsonConvert.DeserializeObject<AuthorizationData>(jsonData);
-        AuthorizationData = authorizationData;
-
-        ShowText(AuthorizationData.IsAuthorized
-            ? $"Привет, {AuthorizationData.User.Name}!"
-            : "Привет, гость.");
-    }
-
-    public void OnCheckClick()
-    {
-        _serverRequestManager.SendGetRequest(
-            "Authorization/getCurrentUser",
-            _loading.SetActive,
-            SetAuthorizationData,
-            ShowError
-        );
+        _user.OnLoadingChanged += LoadingChange;
+        _user.OnError += ShowError;
+        _user.Initilaize();
     }
 
     private void LoadingChange(string key, bool state)
@@ -67,12 +28,6 @@ public class MainSceneScript : MonoBehaviour
             _loadings.Remove(key);
 
         _loading.SetActive(_loadings.Any());
-    }
-
-    private void ShowText(string text)
-    {
-        var textComponent = textMeshProObject.GetComponent<TextMeshProUGUI>();
-        textComponent.text = text;
     }
 
     private void ShowError(string errorMessage)

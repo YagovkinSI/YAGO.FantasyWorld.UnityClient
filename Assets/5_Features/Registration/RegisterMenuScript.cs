@@ -7,14 +7,13 @@ public partial class RegisterMenuScript : MonoBehaviour
     [SerializeField] private TMP_InputField _password;
     [SerializeField] private TMP_InputField _confirmPassword;
 
-    [SerializeField] private ServerRequestManager _serverRequestManager;
     [SerializeField] private GameObject _registerMenu;
+
+    [SerializeField] private ServerRequestManager _serverRequestManager;
+    [SerializeField] private GameData _gameData;
 
     public delegate void LoadingEventHandler(string key, bool state);
     public event LoadingEventHandler OnLoadingChanged;
-
-    public delegate void AuthorizationDataEventHandler(string jsonData);
-    public event AuthorizationDataEventHandler OnRegistred;
 
     public delegate void ErrorEventHandler(string message);
     public event ErrorEventHandler OnError;
@@ -37,7 +36,7 @@ public partial class RegisterMenuScript : MonoBehaviour
 
     private void InvokeRegistred(string jsonData)
     {
-        OnRegistred?.Invoke(jsonData);
+        _gameData.SetAuthorizationData(jsonData);
         _registerMenu.SetActive(false);
     }
 
