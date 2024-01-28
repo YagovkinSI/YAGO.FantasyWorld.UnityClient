@@ -5,7 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class SceneManager : MonoBehaviour
+public class MainSceneScript : MonoBehaviour
 {
     [SerializeField] private ServerRequestManager _serverRequestManager;
 
