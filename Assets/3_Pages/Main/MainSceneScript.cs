@@ -1,3 +1,4 @@
+using Assets._7_Shared.Models;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -8,8 +9,10 @@ public class MainSceneScript : MonoBehaviour
     [SerializeField] private GameObject _loading;
     [SerializeField] private GameObject _error;
 
+    [SerializeField] private GameData _gameData;
     [SerializeField] private UserWidgetScript _user;
     [SerializeField] private MapWidgetScript _map;
+    [SerializeField] private GameObject _organizationPage;
 
     private readonly List<string> _loadings = new();
 
@@ -17,9 +20,40 @@ public class MainSceneScript : MonoBehaviour
     {
         _user.OnLoadingChanged += LoadingChange;
         _user.OnError += ShowError;
-        _user.Initilaize();
-        _map.Initilaize();
+        _user.Initialize();
+        _map.Initialize();
+
+        _map.OnClicked += ShowOrganizationPage;
     }
+
+    private void ShowOrganizationPage(long id)
+    {
+        var organization = _gameData.Organizations.Single(x => x.Id == id);
+
+        var info = $"Игрок: {organization.UserLink?.Name ?? "СВОБОДНО"}\r\n" +
+            $"Могущество: {organization.Power}\r\n" +
+            $"\r\n" +
+            $"{organization.Description}";
+
+        var canTakeOrganization = _gameData.AuthorizationData.IsAuthorized &&
+            _gameData.AuthorizationData.User.OrganizationId == null &&
+            organization.UserLink == null;
+
+        var buttonSettings = new ButtonSettings("Выбрать",
+            canTakeOrganization,
+            () => TakeOrganization(organization.Id));
+
+        _organizationPage.GetComponent<PageScript>().Initialize(
+            id,
+            organization.Name,
+            $"OrganizationHerbs\\{organization.Id}",
+            info,
+            buttonSettings);
+
+        _organizationPage.SetActive(true);
+    }
+
+    private void TakeOrganization(long id) => Debug.Log($"Пытаемся взять организацию {id}");
 
     private void LoadingChange(string key, bool state)
     {

@@ -9,6 +9,11 @@ public class MapWidgetScript : MonoBehaviour
 
     [SerializeField] private GameObject _organizationPrefab;
 
+    private readonly List<IconLabelScript> _organizations = new();
+
+    public delegate void LinkEventHandler<T>(T id);
+    public event LinkEventHandler<long> OnClicked;
+
     private readonly Dictionary<long, Vector3> organizationsPositions = new()
     {
         { 1, new Vector3(-1000, 300) },
@@ -23,7 +28,7 @@ public class MapWidgetScript : MonoBehaviour
         { 10, new Vector3(700, -700) },
     };
 
-    public void Initilaize()
+    public void Initialize()
     {
         if (_gameData.Organizations != null)
             SetOrganizations(_gameData.Organizations);
@@ -32,6 +37,10 @@ public class MapWidgetScript : MonoBehaviour
 
     private void SetOrganizations(Organization[] organizations)
     {
+        foreach (var orgainzation in _organizations)
+            orgainzation.OnClicked -= OnClick;
+        _organizations.Clear();
+
         for (var i = 0; i < organizations.Length; i++)
         {
             var organization = organizations[i];
@@ -44,12 +53,23 @@ public class MapWidgetScript : MonoBehaviour
             var info = organization.UserLink == null
                 ? "Èãðîê: ÑÂÎÁÎÄÍÎ"
                 : $"Èãðîê: {organization.UserLink.Name}";
-            organizationScript.Initialize($"OrganizationHerbs\\{organization.Id}", organization.Name, info);
+            organizationScript.Initialize(organization.Id, $"OrganizationHerbs\\{organization.Id}", organization.Name, info);
+
+            _organizations.Add(organizationScript);
+            organizationScript.OnClicked += OnClick;
 
             organizationObject.transform.SetParent(_content.transform);
 
             var contentPosition = _content.GetComponent<RectTransform>().position;
             organizationObject.GetComponent<RectTransform>().position = new Vector3(position.x + contentPosition.x, position.y + contentPosition.y, 0);
         }
+    }
+
+    private void OnClick(long id) => OnClicked.Invoke(id);
+
+    private void OnDestroy()
+    {
+        foreach (var orgainzation in _organizations)
+            orgainzation.OnClicked -= OnClick;
     }
 }

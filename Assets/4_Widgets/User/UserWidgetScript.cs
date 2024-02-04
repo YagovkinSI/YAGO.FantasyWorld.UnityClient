@@ -20,7 +20,7 @@ public class UserWidgetScript : MonoBehaviour
     public delegate void ErrorEventHandler(string message);
     public event ErrorEventHandler OnError;
 
-    public void Initilaize()
+    public void Initialize()
     {
         _gameData.OnLoadingChanged += LoadingChange;
         _gameData.OnError += ShowError;
