@@ -9,6 +9,7 @@ public class MainSceneScript : MonoBehaviour
     [SerializeField] private GameObject _error;
 
     [SerializeField] private UserWidgetScript _user;
+    [SerializeField] private MapWidgetScript _map;
 
     private readonly List<string> _loadings = new();
 
@@ -17,6 +18,7 @@ public class MainSceneScript : MonoBehaviour
         _user.OnLoadingChanged += LoadingChange;
         _user.OnError += ShowError;
         _user.Initilaize();
+        _map.Initilaize();
     }
 
     private void LoadingChange(string key, bool state)
