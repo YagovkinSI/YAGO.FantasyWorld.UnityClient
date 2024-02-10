@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class ServerRequestManager : MonoBehaviour
 {
-    private const string SERVER_URL = "https://yagoworld.ru";
+    private const string SERVER_URL = "https://localhost:44323";
 
     public enum RequestType
     {
