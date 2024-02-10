@@ -1,6 +1,3 @@
-using Assets._7_Shared.Models;
-using Assets.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -14,7 +11,7 @@ public class MainSceneScript : MonoBehaviour
     [SerializeField] private GameData _gameData;
     [SerializeField] private UserWidgetScript _user;
     [SerializeField] private MapWidgetScript _map;
-    [SerializeField] private GameObject _organizationPage;
+    [SerializeField] private OrganizationInfo _organizationInfo;
 
     private readonly List<string> _loadings = new();
 
@@ -24,48 +21,12 @@ public class MainSceneScript : MonoBehaviour
         _user.OnError += ShowError;
         _user.Initialize();
         _map.Initialize();
+        _organizationInfo.Initialize();
 
         _map.OnClicked += ShowOrganizationPage;
-
-        _gameData.OnAuthorizationDataChanged += CheckOrganizationPage;
     }
 
-    private void ShowOrganizationPage(long id)
-    {
-        var organization = _gameData.Organizations.Single(x => x.Id == id);
-
-        var info = $"Èãðîê: {organization.UserLink?.Name ?? "ÑÂÎÁÎÄÍÎ"}\r\n" +
-            $"Ìîãóùåñòâî: {organization.Power}\r\n" +
-            $"\r\n" +
-            $"{organization.Description}";
-
-        var canTakeOrganization = _gameData.AuthorizationData.IsAuthorized &&
-            _gameData.AuthorizationData.User.OrganizationId == null &&
-            organization.UserLink == null;
-
-        var buttonSettings = new ButtonSettings("Âûáðàòü",
-            canTakeOrganization,
-            () => TakeOrganization(organization.Id));
-
-        _organizationPage.GetComponent<PageScript>().Initialize(
-            id,
-            organization.Name,
-            $"OrganizationHerbs\\{organization.Id}",
-            info,
-            buttonSettings);
-
-        _organizationPage.SetActive(true);
-    }
-
-    private void TakeOrganization(long id) => _gameData.TakeOrganizationForCurrentUser(id);
-
-    private void CheckOrganizationPage(AuthorizationData authorizationData)
-    {
-        if (!_organizationPage.activeSelf)
-            return;
-
-        ShowOrganizationPage(_organizationPage.GetComponent<PageScript>().Id);
-    }
+    private void ShowOrganizationPage(long id) => _organizationInfo.ShowOrganizationPage(id);
 
     private void LoadingChange(string key, bool state)
     {
