@@ -5,15 +5,14 @@ using UnityEngine.Networking;
 
 public class ServerRequestManager : MonoBehaviour
 {
-
     private string SERVER_URL { get; }
 
     public ServerRequestManager()
         : base()
     {
-        SERVER_URL = "https://yagoworld";
+        SERVER_URL = "https://yagoworld.ru";
 #if DEBUG
-        SERVER_URL = "https://localhost:44323";
+        //SERVER_URL = "https://localhost:44323";
 #endif
     }
 
