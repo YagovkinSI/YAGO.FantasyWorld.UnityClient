@@ -1,5 +1,6 @@
 using Assets.Models;
 using Newtonsoft.Json;
+using System.Linq;
 using UnityEngine;
 
 public class GameData : MonoBehaviour
@@ -62,6 +63,28 @@ public class GameData : MonoBehaviour
         var authorizationData = JsonConvert.DeserializeObject<AuthorizationData>(jsonData);
         AuthorizationData = authorizationData;
         OnAuthorizationDataChanged?.Invoke(AuthorizationData);
+    }
+
+    public void TakeOrganizationForCurrentUser(long organizationId)
+    {
+        _serverRequestManager.SendGetRequest(
+            $"Organization/setCurrentUserForOrganization/?organizationId={organizationId}",
+            (state) => LoadingChange("GameData_TakeOrganizationForCurrentUser", state),
+            SetOrganizationTaked,
+            ShowError
+            );
+    }
+
+    private void SetOrganizationTaked(string jsonData)
+    {
+        var authorizationData = JsonConvert.DeserializeObject<AuthorizationData>(jsonData);
+        AuthorizationData = authorizationData;
+
+        var organization = Organizations.Single(o => o.Id == authorizationData.User.OrganizationId);
+        organization.UserLink = new Link<string> { Id = authorizationData.User.Id, Name = authorizationData.User.Name };
+
+        OnAuthorizationDataChanged.Invoke(AuthorizationData);
+        OnOrganizationsDataChanged.Invoke(Organizations);
     }
 
     private void SetOrganizationsData(string jsonData)

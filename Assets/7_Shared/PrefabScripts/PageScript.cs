@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PageScript : MonoBehaviour
 {
+    public long Id { get; private set; }
+
     [SerializeField] private TMP_Text _title;
     [SerializeField] private Image _image;
     [SerializeField] private TMP_Text _info;
@@ -12,6 +14,8 @@ public class PageScript : MonoBehaviour
 
     public void Initialize(long id, string title, string imagePath, string info, ButtonSettings buttonSettings)
     {
+        Id = id;
+
         _title.text = title;
 
         var sprite = Resources.Load<Sprite>(imagePath);

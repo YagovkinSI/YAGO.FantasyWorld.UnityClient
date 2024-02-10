@@ -1,4 +1,6 @@
 using Assets._7_Shared.Models;
+using Assets.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -24,6 +26,8 @@ public class MainSceneScript : MonoBehaviour
         _map.Initialize();
 
         _map.OnClicked += ShowOrganizationPage;
+
+        _gameData.OnAuthorizationDataChanged += CheckOrganizationPage;
     }
 
     private void ShowOrganizationPage(long id)
@@ -53,7 +57,15 @@ public class MainSceneScript : MonoBehaviour
         _organizationPage.SetActive(true);
     }
 
-    private void TakeOrganization(long id) => Debug.Log($"ѕытаемс€ вз€ть организацию {id}");
+    private void TakeOrganization(long id) => _gameData.TakeOrganizationForCurrentUser(id);
+
+    private void CheckOrganizationPage(AuthorizationData authorizationData)
+    {
+        if (!_organizationPage.activeSelf)
+            return;
+
+        ShowOrganizationPage(_organizationPage.GetComponent<PageScript>().Id);
+    }
 
     private void LoadingChange(string key, bool state)
     {
