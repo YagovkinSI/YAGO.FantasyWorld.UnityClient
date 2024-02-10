@@ -1897,6 +1897,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 473018829}
     m_Modifications:
+    - target: {fileID: 1194208296965688121, guid: 04042ef4fb6410f468d4febf35f1d658,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2898901057346110148, guid: 04042ef4fb6410f468d4febf35f1d658,
         type: 3}
       propertyPath: m_text
@@ -1916,6 +1921,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 866321760}
+    - target: {fileID: 4121409296812310094, guid: 04042ef4fb6410f468d4febf35f1d658,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnRegisterClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 4121409296812310094, guid: 04042ef4fb6410f468d4febf35f1d658,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RegisterMenuScript, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6744644276355932361, guid: 04042ef4fb6410f468d4febf35f1d658,
         type: 3}
@@ -1926,6 +1941,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LoginInputField
+      objectReference: {fileID: 0}
+    - target: {fileID: 7027349239271659394, guid: 04042ef4fb6410f468d4febf35f1d658,
+        type: 3}
+      propertyPath: m_text
+      value: "\u0420\u0435\u0433\u0438\u0441\u0442\u0440\u0430\u0446\u0438\u044F"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7027349239271659394, guid: 04042ef4fb6410f468d4febf35f1d658,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 53.7
       objectReference: {fileID: 0}
     - target: {fileID: 7097202004183240951, guid: 04042ef4fb6410f468d4febf35f1d658,
         type: 3}
@@ -2445,6 +2470,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &1222164993 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3085506987070504668, guid: 653e34d97494f774f9afedcbfc859d53,
+    type: 3}
+  m_PrefabInstance: {fileID: 1580647151}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a379015020d67c4f86b1c2e51bb8217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1244420665
 GameObject:
   m_ObjectHideFlags: 0
@@ -3170,6 +3207,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312783461179516901, guid: 653e34d97494f774f9afedcbfc859d53,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1222164993}
+    - target: {fileID: 6312783461179516901, guid: 653e34d97494f774f9afedcbfc859d53,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312783461179516901, guid: 653e34d97494f774f9afedcbfc859d53,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Assets._7_Shared.Models.ButtonScript, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312783461179516901, guid: 653e34d97494f774f9afedcbfc859d53,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8536074370570662075, guid: 653e34d97494f774f9afedcbfc859d53,
         type: 3}
