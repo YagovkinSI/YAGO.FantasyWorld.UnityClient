@@ -12,7 +12,7 @@ public class ServerRequestManager : MonoBehaviour
     {
         SERVER_URL = "https://yagoworld.ru";
 #if DEBUG
-        //SERVER_URL = "https://localhost:44323";
+        SERVER_URL = "https://localhost:44323";
 #endif
     }
 
@@ -23,10 +23,14 @@ public class ServerRequestManager : MonoBehaviour
     }
 
     public void SendGetRequest(string url, Action<bool> loadingAction, Action<string> successAction, Action<string> errorAction)
-        => StartCoroutine(SendRequest(RequestType.Get, url, null, loadingAction, successAction, errorAction));
+    {
+        StartCoroutine(SendRequest(RequestType.Get, url, null, loadingAction, successAction, errorAction));
+    }
 
-    public void SendPostRequest(string url, string jsinData, Action<bool> loadingAction, Action<string> successAction, Action<string> errorAction)
-        => StartCoroutine(SendRequest(RequestType.Post, url, jsinData, loadingAction, successAction, errorAction));
+    public void SendPostRequest(string url, string jsonData, Action<bool> loadingAction, Action<string> successAction, Action<string> errorAction)
+    {
+        StartCoroutine(SendRequest(RequestType.Post, url, jsonData, loadingAction, successAction, errorAction));
+    }
 
     private IEnumerator SendRequest(RequestType requestType, string url, string jsonData, Action<bool> loadingAction, Action<string> successAction, Action<string> errorAction)
     {
@@ -48,16 +52,19 @@ public class ServerRequestManager : MonoBehaviour
     private IEnumerator InnerSendGetRequest(string url, Action<string> successAction, Action<string> errorAction)
     {
         var fullUrl = $"{SERVER_URL}/{url}";
+        Debug.Log($"GetRequest: {url}");
         using (var webRequest = UnityWebRequest.Get(fullUrl))
         {
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
+                Debug.Log($"GetResponse: {webRequest.downloadHandler.text}");
                 successAction(webRequest.downloadHandler.text);
             }
             else
             {
+                Debug.Log($"GetError: {webRequest.downloadHandler.text}");
                 errorAction(webRequest.downloadHandler.text);
             }
         }
@@ -68,6 +75,7 @@ public class ServerRequestManager : MonoBehaviour
         var fullUrl = $"{SERVER_URL}/{url}";
         using (var webRequest = UnityWebRequest.PostWwwForm(fullUrl, jsonData))
         {
+            Debug.Log($"PostRequest: {url}. Data: {jsonData}");
             var bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
@@ -77,10 +85,12 @@ public class ServerRequestManager : MonoBehaviour
 
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
+                Debug.Log($"PostResponse: {webRequest.downloadHandler.text}");
                 successAction(webRequest.downloadHandler.text);
             }
             else
             {
+                Debug.Log($"PostError: {webRequest.downloadHandler.text}");
                 errorAction(webRequest.downloadHandler.text);
             }
         }

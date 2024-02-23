@@ -20,6 +20,7 @@ namespace Assets._7_Shared.Models
 
         public void OnClick()
         {
+            Debug.Log("OnClick");
             Action.Invoke();
         }
     }

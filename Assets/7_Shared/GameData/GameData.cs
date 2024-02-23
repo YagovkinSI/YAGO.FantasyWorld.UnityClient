@@ -1,5 +1,7 @@
+using Assets._6_Entities.Quests;
 using Assets.Models;
 using Newtonsoft.Json;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -11,6 +13,7 @@ public class GameData : MonoBehaviour
 
     public AuthorizationData AuthorizationData { get; private set; }
     public Organization[] Organizations { get; private set; }
+    public QuestData QuestData { get; private set; }
 
     public delegate void LoadingEventHandler(string key, bool state);
     public event LoadingEventHandler OnLoadingChanged;
@@ -23,6 +26,9 @@ public class GameData : MonoBehaviour
 
     public delegate void OrganizationsDataEventHandler(Organization[] organizations);
     public event OrganizationsDataEventHandler OnOrganizationsDataChanged;
+
+    public delegate void QuestDataEventHandler(QuestData questData);
+    public event QuestDataEventHandler OnQuestDataChanged;
 
     private void Awake()
     {
@@ -63,6 +69,16 @@ public class GameData : MonoBehaviour
         var authorizationData = JsonConvert.DeserializeObject<AuthorizationData>(jsonData);
         AuthorizationData = authorizationData;
         OnAuthorizationDataChanged?.Invoke(AuthorizationData);
+
+        if (authorizationData.IsAuthorized)
+        {
+            _serverRequestManager.SendGetRequest(
+                "Quest/getQuest",
+                (state) => LoadingChange("GameData_GetQuest", state),
+                SetQuestData,
+                ShowError
+        );
+        }
     }
 
     public void TakeOrganizationForCurrentUser(long organizationId)
@@ -94,6 +110,16 @@ public class GameData : MonoBehaviour
         OnOrganizationsDataChanged?.Invoke(Organizations);
     }
 
-    private void ShowError(string errorMessage) => OnError?.Invoke(errorMessage);
+    private void SetQuestData(string jsonData)
+    {
+        var questData = JsonConvert.DeserializeObject<QuestData>(jsonData);
+        QuestData = questData;
+        OnQuestDataChanged?.Invoke(QuestData);
+    }
 
+    private void ShowError(string errorMessage) => OnError?.Invoke(errorMessage);
+    internal void SetQuestResult(string jsonData)
+    {
+        OnError?.Invoke(jsonData);
+    }
 }
