@@ -48,12 +48,17 @@ public class GameData : MonoBehaviour
             ShowError
         );
 
+        GetOrganizations();
+    }
+
+    private void GetOrganizations()
+    {
         _serverRequestManager.SendGetRequest(
-            "Organization/getOrganizations",
-            (state) => LoadingChange("GameData_GetOrganizations", state),
-            SetOrganizationsData,
-            ShowError
-        );
+                    "Organization/getOrganizations",
+                    (state) => LoadingChange("GameData_GetOrganizations", state),
+                    SetOrganizationsData,
+                    ShowError
+                );
     }
 
     private void LoadingChange(string key, bool state) => OnLoadingChanged?.Invoke(key, state);
@@ -66,11 +71,11 @@ public class GameData : MonoBehaviour
 
         if (authorizationData.IsAuthorized)
         {
-            SendGetQuest();
+            GetQuest();
         }
     }
 
-    private void SendGetQuest()
+    private void GetQuest()
     {
         _serverRequestManager.SendGetRequest(
             "Quest/getQuest",
@@ -121,6 +126,7 @@ public class GameData : MonoBehaviour
     internal void ResetQuest()
     {
         QuestData = null;
-        SendGetQuest();
+        GetQuest();
+        GetOrganizations();
     }
 }
