@@ -18,15 +18,19 @@ public class MainSceneScript : MonoBehaviour
 
     private void Start()
     {
-        _user.OnLoadingChanged += LoadingChange;
+        _user.OnLoadingStateChanged += LoadingChange;
         _user.OnError += ShowError;
-
         _user.Initialize();
+
         _map.Initialize();
+
+        _questWidget.OnLoadingStateChanged += LoadingChange;
+        _questWidget.OnError += ShowError;
         _questWidget.Initialize();
+
         _organizationInfo.Initialize();
 
-        _map.OnClicked += ShowOrganizationPage;
+        _map.OnOrganizationSelected += ShowOrganizationPage;
     }
 
     private void ShowOrganizationPage(long id) => _organizationInfo.ShowOrganizationPage(id);

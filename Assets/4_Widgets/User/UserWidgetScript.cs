@@ -1,3 +1,4 @@
+using Assets._7_Shared.EventHandlers;
 using Assets.Models;
 using TMPro;
 using UnityEngine;
@@ -14,11 +15,8 @@ public class UserWidgetScript : MonoBehaviour
     [SerializeField] private LoginMenuScript _loginMenu;
     [SerializeField] private RegisterMenuScript _registerMenu;
 
-    public delegate void LoadingEventHandler(string key, bool state);
-    public event LoadingEventHandler OnLoadingChanged;
-
-    public delegate void ErrorEventHandler(string message);
-    public event ErrorEventHandler OnError;
+    public event EventHandlersHelper.LoadingStateEventHandler OnLoadingStateChanged;
+    public event EventHandlersHelper.ErrorEventHandler OnError;
 
     public void Initialize()
     {
@@ -41,7 +39,7 @@ public class UserWidgetScript : MonoBehaviour
             _labelText.text = LABEL_TEXT_ATTENTION;
     }
 
-    private void LoadingChange(string key, bool state) => OnLoadingChanged?.Invoke(key, state);
+    private void LoadingChange(string key, bool state) => OnLoadingStateChanged?.Invoke(key, state);
 
     private void ShowError(string errorMessage) => OnError?.Invoke(errorMessage);
 }
