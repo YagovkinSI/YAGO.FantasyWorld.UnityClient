@@ -12,6 +12,7 @@ public class MainSceneScript : MonoBehaviour
     [SerializeField] private UserWidgetScript _user;
     [SerializeField] private MapWidgetScript _map;
     [SerializeField] private OrganizationInfo _organizationInfo;
+    [SerializeField] private QuestWidget _questWidget;
 
     private readonly List<string> _loadings = new();
 
@@ -19,8 +20,10 @@ public class MainSceneScript : MonoBehaviour
     {
         _user.OnLoadingChanged += LoadingChange;
         _user.OnError += ShowError;
+
         _user.Initialize();
         _map.Initialize();
+        _questWidget.Initialize();
         _organizationInfo.Initialize();
 
         _map.OnClicked += ShowOrganizationPage;
