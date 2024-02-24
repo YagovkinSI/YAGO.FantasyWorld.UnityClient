@@ -103,6 +103,8 @@ public class GameData : MonoBehaviour
         var organization = Organizations.Single(o => o.Id == authorizationData.User.OrganizationId);
         organization.UserLink = new Link<string> { Id = authorizationData.User.Id, Name = authorizationData.User.Name };
 
+        GetQuest();
+
         OnAuthorizationDataChanged.Invoke(AuthorizationData);
         OnOrganizationsDataChanged.Invoke(Organizations);
     }
