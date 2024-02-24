@@ -1,3 +1,4 @@
+using Assets._7_Shared.EventHandlers;
 using TMPro;
 using UnityEngine;
 
@@ -12,11 +13,8 @@ public partial class RegisterMenuScript : MonoBehaviour
     [SerializeField] private ServerRequestManager _serverRequestManager;
     [SerializeField] private GameData _gameData;
 
-    public delegate void LoadingEventHandler(string key, bool state);
-    public event LoadingEventHandler OnLoadingChanged;
-
-    public delegate void ErrorEventHandler(string message);
-    public event ErrorEventHandler OnError;
+    public event EventHandlersHelper.LoadingStateEventHandler OnLoadingChanged;
+    public event EventHandlersHelper.ErrorEventHandler OnError;
 
     public void OnRegisterClick()
     {

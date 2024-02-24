@@ -1,4 +1,5 @@
-using Assets._6_Entities.Quests;
+using Assets._4_Widgets.Quest.Models;
+using Assets._7_Shared.EventHandlers;
 using UnityEngine;
 
 public class QuestWidget : MonoBehaviour
@@ -9,9 +10,12 @@ public class QuestWidget : MonoBehaviour
     [SerializeField] private GameObject _questTimeoutPage;
     [SerializeField] private QuestPageScript _questPage;
 
-    public void Initialize() => _gameData.OnQuestDataChanged += SetQuestData;
+    public event EventHandlersHelper.LoadingStateEventHandler OnLoadingStateChanged;
+    public event EventHandlersHelper.ErrorEventHandler OnError;
 
-    public void OnClickQuestButton()
+    public void Initialize() => _questPage.OnQuestOptionSelected += ShowOptionDetails;
+
+    public void ShowQuestWindow()
     {
         if (_gameData.QuestData == null)
             return;
@@ -19,11 +23,35 @@ public class QuestWidget : MonoBehaviour
         if (!_gameData.QuestData.IsQuestReady)
             _questTimeoutPage.SetActive(true);
         else
-            _questPage.SetActive(true);
+            _questPage.ShowQuest(_gameData.QuestData);
     }
 
-    private void SetQuestData(QuestData questData)
+    private void ShowOptionDetails(int optionId)
     {
-        _questPage.SetQuestData(questData);
+        var request = new SetQuestOptionRequest
+        {
+            QuestId = _gameData.QuestData.Quest.Id,
+            QuestOptionId = optionId
+        };
+        var jsonData = JsonUtility.ToJson(request);
+        Debug.Log(jsonData);
+
+        _serverRequestManager.SendPostRequest(
+                "Quest/setQuestOption",
+                jsonData,
+                InvokeLoginLoading,
+                InvokeQuestEnd,
+                InvokeError
+            );
     }
+
+    private void InvokeLoginLoading(bool state) => OnLoadingStateChanged?.Invoke("Request_Quest_SetQuestOption", state);
+
+    private void InvokeQuestEnd(string jsonData)
+    {
+        _gameData.ResetQuest();
+        OnError?.Invoke(jsonData);
+    }
+
+    private void InvokeError(string errorMessage) => OnError?.Invoke(errorMessage);
 }

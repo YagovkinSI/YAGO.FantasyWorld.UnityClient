@@ -1,3 +1,4 @@
+using Assets._7_Shared.EventHandlers;
 using Assets.Models;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,8 +12,7 @@ public class MapWidgetScript : MonoBehaviour
 
     private readonly List<IconLabelScript> _organizations = new();
 
-    public delegate void LinkEventHandler<T>(T id);
-    public event LinkEventHandler<long> OnClicked;
+    public event EventHandlersHelper.ItemSelectedEventHandler<long> OnOrganizationSelected;
 
     private readonly Dictionary<long, Vector3> organizationsPositions = new()
     {
@@ -65,7 +65,7 @@ public class MapWidgetScript : MonoBehaviour
         }
     }
 
-    private void OnClick(long id) => OnClicked.Invoke(id);
+    private void OnClick(long id) => OnOrganizationSelected.Invoke(id);
 
     private void OnDestroy()
     {
