@@ -30,7 +30,7 @@ public class QuestWidget : MonoBehaviour
     {
         var request = new SetQuestOptionRequest
         {
-            QuestId = _gameData.QuestData.Quest.Id,
+            QuestId = _gameData.QuestData.QuestWithDetails.Quest.Id,
             QuestOptionId = optionId
         };
         var jsonData = JsonUtility.ToJson(request);

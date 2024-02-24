@@ -18,10 +18,10 @@ public class QuestPageScript : MonoBehaviour
 
     public void ShowQuest(QuestData questData)
     {
-        _questText.text = questData.Quest.QuestText;
+        _questText.text = questData.QuestWithDetails.Details.QuestText;
 
         var buttonSettingsList = new List<ButtonSettings>();
-        foreach (var option in questData.Quest.QuestOptions)
+        foreach (var option in questData.QuestWithDetails.Details.QuestOptions)
         {
             var buttonSettings = new ButtonSettings(option.Text, true,
                 () =>

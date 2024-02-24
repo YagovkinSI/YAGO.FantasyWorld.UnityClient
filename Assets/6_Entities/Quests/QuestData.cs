@@ -20,6 +20,6 @@ namespace Assets._6_Entities.Quests
         /// <summary>
         /// Данные квеста
         /// </summary>
-        public QuestForUser Quest { get; set; }
+        public QuestWithDetails QuestWithDetails { get; set; }
     }
 }
