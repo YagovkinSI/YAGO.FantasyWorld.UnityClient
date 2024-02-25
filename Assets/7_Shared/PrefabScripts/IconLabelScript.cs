@@ -1,3 +1,4 @@
+using Assets._7_Shared.EventHandlers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,8 +11,7 @@ public class IconLabelScript : MonoBehaviour
     [SerializeField] private TMP_Text _title;
     [SerializeField] private TMP_Text _info;
 
-    public delegate void LinkEventHandler(long id);
-    public event LinkEventHandler OnClicked;
+    public event EventHandlersHelper.ItemSelectedEventHandler<long> OnClicked;
 
     public void Initialize(long id, string iconPath, string title, string info)
     {

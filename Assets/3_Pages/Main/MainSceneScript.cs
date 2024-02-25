@@ -12,18 +12,25 @@ public class MainSceneScript : MonoBehaviour
     [SerializeField] private UserWidgetScript _user;
     [SerializeField] private MapWidgetScript _map;
     [SerializeField] private OrganizationInfo _organizationInfo;
+    [SerializeField] private QuestWidget _questWidget;
 
     private readonly List<string> _loadings = new();
 
     private void Start()
     {
-        _user.OnLoadingChanged += LoadingChange;
+        _user.OnLoadingStateChanged += LoadingChange;
         _user.OnError += ShowError;
         _user.Initialize();
+
         _map.Initialize();
+
+        _questWidget.OnLoadingStateChanged += LoadingChange;
+        _questWidget.OnError += ShowError;
+        _questWidget.Initialize();
+
         _organizationInfo.Initialize();
 
-        _map.OnClicked += ShowOrganizationPage;
+        _map.OnOrganizationSelected += ShowOrganizationPage;
     }
 
     private void ShowOrganizationPage(long id) => _organizationInfo.ShowOrganizationPage(id);

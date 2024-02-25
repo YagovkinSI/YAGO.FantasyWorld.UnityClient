@@ -1,3 +1,5 @@
+using Assets._6_Entities.Quests;
+using Assets._7_Shared.EventHandlers;
 using Assets.Models;
 using Newtonsoft.Json;
 using System.Linq;
@@ -11,18 +13,19 @@ public class GameData : MonoBehaviour
 
     public AuthorizationData AuthorizationData { get; private set; }
     public Organization[] Organizations { get; private set; }
+    public QuestData QuestData { get; private set; }
 
-    public delegate void LoadingEventHandler(string key, bool state);
-    public event LoadingEventHandler OnLoadingChanged;
-
-    public delegate void ErrorEventHandler(string message);
-    public event ErrorEventHandler OnError;
+    public event EventHandlersHelper.LoadingStateEventHandler OnLoadingChanged;
+    public event EventHandlersHelper.ErrorEventHandler OnError;
 
     public delegate void AuthorizationDataEventHandler(AuthorizationData authorizationData);
     public event AuthorizationDataEventHandler OnAuthorizationDataChanged;
 
     public delegate void OrganizationsDataEventHandler(Organization[] organizations);
     public event OrganizationsDataEventHandler OnOrganizationsDataChanged;
+
+    public delegate void QuestDataEventHandler(QuestData questData);
+    public event QuestDataEventHandler OnQuestDataChanged;
 
     private void Awake()
     {
@@ -34,10 +37,7 @@ public class GameData : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-        InitializeManager();
-    }
+    private void Start() => InitializeManager();
 
     private void InitializeManager()
     {
@@ -48,12 +48,17 @@ public class GameData : MonoBehaviour
             ShowError
         );
 
+        GetOrganizations();
+    }
+
+    private void GetOrganizations()
+    {
         _serverRequestManager.SendGetRequest(
-            "Organization/getOrganizations",
-            (state) => LoadingChange("GameData_GetOrganizations", state),
-            SetOrganizationsData,
-            ShowError
-        );
+                    "Organization/getOrganizations",
+                    (state) => LoadingChange("GameData_GetOrganizations", state),
+                    SetOrganizationsData,
+                    ShowError
+                );
     }
 
     private void LoadingChange(string key, bool state) => OnLoadingChanged?.Invoke(key, state);
@@ -63,6 +68,21 @@ public class GameData : MonoBehaviour
         var authorizationData = JsonConvert.DeserializeObject<AuthorizationData>(jsonData);
         AuthorizationData = authorizationData;
         OnAuthorizationDataChanged?.Invoke(AuthorizationData);
+
+        if (authorizationData.IsAuthorized)
+        {
+            GetQuest();
+        }
+    }
+
+    private void GetQuest()
+    {
+        _serverRequestManager.SendGetRequest(
+            "Quest/getQuest",
+            (state) => LoadingChange("GameData_GetQuest", state),
+            SetQuestData,
+            ShowError
+        );
     }
 
     public void TakeOrganizationForCurrentUser(long organizationId)
@@ -83,6 +103,8 @@ public class GameData : MonoBehaviour
         var organization = Organizations.Single(o => o.Id == authorizationData.User.OrganizationId);
         organization.UserLink = new Link<string> { Id = authorizationData.User.Id, Name = authorizationData.User.Name };
 
+        GetQuest();
+
         OnAuthorizationDataChanged.Invoke(AuthorizationData);
         OnOrganizationsDataChanged.Invoke(Organizations);
     }
@@ -94,6 +116,19 @@ public class GameData : MonoBehaviour
         OnOrganizationsDataChanged?.Invoke(Organizations);
     }
 
-    private void ShowError(string errorMessage) => OnError?.Invoke(errorMessage);
+    private void SetQuestData(string jsonData)
+    {
+        var questData = JsonConvert.DeserializeObject<QuestData>(jsonData);
+        QuestData = questData;
+        OnQuestDataChanged?.Invoke(QuestData);
+    }
 
+    private void ShowError(string errorMessage) => OnError?.Invoke(errorMessage);
+    
+    internal void ResetQuest()
+    {
+        QuestData = null;
+        GetQuest();
+        GetOrganizations();
+    }
 }
