@@ -8,6 +8,9 @@ public class ButtonGroupScript : MonoBehaviour
 
     public void Initialize(ButtonSettings[] buttonSettingsList)
     {
+        foreach (var button in _buttons)
+            button.gameObject.SetActive(false);
+
         var currButtonIndex = 2;
         for (var i = buttonSettingsList.Length - 1; i >= 0; i--)
         {

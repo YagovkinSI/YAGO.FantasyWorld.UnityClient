@@ -53,7 +53,7 @@ public class MapWidgetScript : MonoBehaviour
             var info = organization.UserLink == null
                 ? "Игрок: СВОБОДНО"
                 : $"Игрок: {organization.UserLink.Name}";
-            organizationScript.Initialize(organization.Id, $"OrganizationHerbs\\{organization.Id}", organization.Name, info);
+            organizationScript.Initialize(organization.Id, $"Images/OrganizationHerbs/{organization.Id}", organization.Name, info);
 
             _organizations.Add(organizationScript);
             organizationScript.OnClicked += OnClick;
