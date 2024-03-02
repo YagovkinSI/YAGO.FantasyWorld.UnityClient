@@ -1,11 +1,13 @@
 using Assets._7_Shared.Models;
+using Assets._7_Shared.PrefabScripts.Page.Models;
 using Assets.Models;
 using System.Linq;
 using UnityEngine;
 
 public class OrganizationInfo : MonoBehaviour
 {
-    [SerializeField] private GameObject _organizationPage;
+    [SerializeField] private PageScript _page;
+    private long _currentOrganizationId;
 
     [SerializeField] private GameData _gameData;
 
@@ -13,12 +15,11 @@ public class OrganizationInfo : MonoBehaviour
 
     public void ShowOrganizationPage(long id)
     {
+        _currentOrganizationId = id;
+
         var organization = _gameData.Organizations.Single(x => x.Id == id);
 
-        var info = $"Èãðîê: {organization.UserLink?.Name ?? "ÑÂÎÁÎÄÍÎ"}\r\n" +
-            $"Ìîãóùåñòâî: {organization.Power}\r\n" +
-        $"\r\n" +
-        $"{organization.Description}";
+        var info = GetInfo(organization);
 
         var canTakeOrganization = _gameData.AuthorizationData.IsAuthorized &&
             _gameData.AuthorizationData.User.OrganizationId == null &&
@@ -28,23 +29,32 @@ public class OrganizationInfo : MonoBehaviour
             canTakeOrganization,
             () => TakeOrganization(organization.Id));
 
-        _organizationPage.GetComponent<PageOldScript>().Initialize(
-            id,
-            organization.Name,
-            $"OrganizationHerbs\\{organization.Id}",
-            info,
-            buttonSettings);
+        var pageSettings = new PageSettings()
+        {
+            Tittle = organization.Name,
+            ImagePath = $"Images/OrganizationHerbs/{organization.Id}",
+            Text = info,
+            ButtonSettings = new ButtonSettings[] { buttonSettings }
+        };
+        _page.Initialize(pageSettings);
+        _page.SetActive(true);
+    }
 
-        _organizationPage.SetActive(true);
+    private static string GetInfo(Organization organization)
+    {
+        return $"Èãðîê: {organization.UserLink?.Name ?? "ÑÂÎÁÎÄÍÎ"}\r\n" +
+                    $"Ìîãóùåñòâî: {organization.Power}\r\n" +
+                $"\r\n" +
+                $"{organization.Description}";
     }
 
     private void TakeOrganization(long id) => _gameData.TakeOrganizationForCurrentUser(id);
 
     private void CheckOrganizationPage(AuthorizationData authorizationData)
     {
-        if (!_organizationPage.activeSelf)
+        if (!_page.gameObject.activeSelf)
             return;
 
-        ShowOrganizationPage(_organizationPage.GetComponent<PageOldScript>().Id);
+        ShowOrganizationPage(_currentOrganizationId);
     }
 }
