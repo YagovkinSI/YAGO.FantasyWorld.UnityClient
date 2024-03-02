@@ -1,5 +1,5 @@
 # ninja log v5
-11	1023	7292427672623704	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	d74e5b5a4883096f
-1024	2130	7292427681914434	C:/Users/scorp/source/repos/YAGO.FantasyWorld.UnityClient/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6ido6f6t/obj/arm64-v8a/libswappywrapper.so	77c3135a9c7ed437
-15	508	7292434577362915	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	d74e5b5a4883096f
-510	1044	7292434581973865	C:/Users/scorp/source/repos/YAGO.FantasyWorld.UnityClient/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6ido6f6t/obj/arm64-v8a/libswappywrapper.so	77c3135a9c7ed437
+11	1302	7305420264111064	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	d74e5b5a4883096f
+1304	2633	7305420275651035	C:/Users/scorp/source/repos/YAGO.FantasyWorld.UnityClient/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6ido6f6t/obj/arm64-v8a/libswappywrapper.so	77c3135a9c7ed437
+4	296	7305426051361669	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	d74e5b5a4883096f
+297	551	7305426053300285	C:/Users/scorp/source/repos/YAGO.FantasyWorld.UnityClient/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/6ido6f6t/obj/arm64-v8a/libswappywrapper.so	77c3135a9c7ed437

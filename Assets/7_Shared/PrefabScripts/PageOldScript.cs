@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PageScript : MonoBehaviour
+public class PageOldScript : MonoBehaviour
 {
     public long Id { get; private set; }
 

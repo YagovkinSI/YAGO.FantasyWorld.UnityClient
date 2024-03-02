@@ -28,7 +28,7 @@ public class OrganizationInfo : MonoBehaviour
             canTakeOrganization,
             () => TakeOrganization(organization.Id));
 
-        _organizationPage.GetComponent<PageScript>().Initialize(
+        _organizationPage.GetComponent<PageOldScript>().Initialize(
             id,
             organization.Name,
             $"OrganizationHerbs\\{organization.Id}",
@@ -45,6 +45,6 @@ public class OrganizationInfo : MonoBehaviour
         if (!_organizationPage.activeSelf)
             return;
 
-        ShowOrganizationPage(_organizationPage.GetComponent<PageScript>().Id);
+        ShowOrganizationPage(_organizationPage.GetComponent<PageOldScript>().Id);
     }
 }
