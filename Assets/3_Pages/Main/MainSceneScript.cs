@@ -1,3 +1,4 @@
+using Assets._7_Shared.PrefabScripts.Page.Models;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public class MainSceneScript : MonoBehaviour
 {
+    [SerializeField] private PageScript _page;
     [SerializeField] private GameObject _loading;
     [SerializeField] private GameObject _error;
 
@@ -18,6 +20,8 @@ public class MainSceneScript : MonoBehaviour
 
     private void Start()
     {
+        InitStartPage();
+
         _user.OnLoadingStateChanged += LoadingChange;
         _user.OnError += ShowError;
         _user.Initialize();
@@ -31,6 +35,21 @@ public class MainSceneScript : MonoBehaviour
         _organizationInfo.Initialize();
 
         _map.OnOrganizationSelected += ShowOrganizationPage;
+    }
+
+    private void InitStartPage()
+    {
+        var startPageSettings = new PageSettings
+        {
+            Tittle = "Предыстория",
+            ImagePath = "Images/History/1",
+            Text = "Три столетия назад, великие боги ниспослали свой гнев на эльниров, пробудив вулкан посреди Триморья. Жемчужный Полис эльниров был сокрушен землетрясением и цунами, портовые города на берегах континента были уничтожены, а пепел закрыл небеса на многие недели. Регион погрузился во тьму и хаос, но из пепла возможен новый порядок.\r\n\r\nВ то время как на востоке, в Море Сотен Островов, войны между великими эльнирскими полисами и государством нахумцев разгораются с новой силой, небольшие полисы и области у Светлых Гор могут развивать свою судьбу или сражаться за власть на берегах Солнечного Побережья.",
+            ButtonSettings = new Assets._7_Shared.Models.ButtonSettings[]
+            {
+                new("Закрыть", true, () => _page.SetActive(false))
+            }
+        };
+        _page.Initialize(startPageSettings);
     }
 
     private void ShowOrganizationPage(long id) => _organizationInfo.ShowOrganizationPage(id);
