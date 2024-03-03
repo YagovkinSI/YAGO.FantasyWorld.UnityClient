@@ -41,14 +41,34 @@ public class GameData : MonoBehaviour
 
     private void InitializeManager()
     {
-        _serverRequestManager.SendGetRequest(
-            "Authorization/getCurrentUser",
-            (state) => LoadingChange("GameData_GetCurrentUser", state),
-            SetAuthorizationData,
-            ShowError
-        );
-
+        GetCurrentUser();
         GetOrganizations();
+    }
+
+    private void GetCurrentUser()
+    {
+        var savedToken = PlayerPrefs.GetString("token");
+        if (string.IsNullOrEmpty(savedToken))
+        {
+            _serverRequestManager.SendGetRequest(
+                    "Authorization/getCurrentUser",
+                    (state) => LoadingChange("GameData_GetCurrentUser", state),
+                    SetAuthorizationData,
+                    ShowError
+                );
+        }
+        else
+        {
+            var request = CryptoHelper.Decrypt<LoginRequest>(savedToken);
+            var jsonData = JsonUtility.ToJson(request);
+            _serverRequestManager.SendPostRequest(
+                "Authorization/login",
+                jsonData,
+                (state) => LoadingChange("GameData_UseSavedAuthorizationData", state),
+                SetAuthorizationData,
+                (error) => OnError?.Invoke($"Не удалось подключится по сохраненным данным авторизации. {error}")
+            );
+        }
     }
 
     private void GetOrganizations()
@@ -88,10 +108,10 @@ public class GameData : MonoBehaviour
     public void TakeOrganizationForCurrentUser(long organizationId)
     {
         _serverRequestManager.SendGetRequest(
-            $"Organization/setCurrentUserForOrganization/?organizationId={organizationId}",
-            (state) => LoadingChange("GameData_TakeOrganizationForCurrentUser", state),
-            SetOrganizationTaked,
-            ShowError
+                $"Organization/setCurrentUserForOrganization/?organizationId={organizationId}",
+                (state) => LoadingChange("GameData_TakeOrganizationForCurrentUser", state),
+                SetOrganizationTaked,
+                ShowError
             );
     }
 
@@ -124,11 +144,17 @@ public class GameData : MonoBehaviour
     }
 
     private void ShowError(string errorMessage) => OnError?.Invoke(errorMessage);
-    
+
     internal void ResetQuest()
     {
         QuestData = null;
         GetQuest();
         GetOrganizations();
+    }
+
+    public void SaveAuthorizationData(LoginRequest loginRequest)
+    {
+        var token = CryptoHelper.Encrypt(loginRequest);
+        PlayerPrefs.SetString("token", token);
     }
 }

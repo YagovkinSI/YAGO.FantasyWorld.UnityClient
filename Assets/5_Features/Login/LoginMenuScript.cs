@@ -34,6 +34,11 @@ public partial class LoginMenuScript : MonoBehaviour
     private void InvokeLogined(string jsonData)
     {
         _gameData.SetAuthorizationData(jsonData);
+        if (_gameData.AuthorizationData.IsAuthorized)
+        {
+            var loginRequest = new LoginRequest { UserName = _login.text, Password = _password.text };
+            _gameData.SaveAuthorizationData(loginRequest);
+        }
         _loginMenu.SetActive(false);
     }
 

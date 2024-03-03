@@ -72,8 +72,6 @@ public class QuestWidget : MonoBehaviour
             QuestOptionId = optionId
         };
         var jsonData = JsonUtility.ToJson(request);
-        Debug.Log(jsonData);
-
         _serverRequestManager.SendPostRequest(
                 "Quest/setQuestOption",
                 jsonData,
