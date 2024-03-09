@@ -52,19 +52,19 @@ public class ServerRequestManager : MonoBehaviour
     private IEnumerator InnerSendGetRequest(string url, Action<string> successAction, Action<string> errorAction)
     {
         var fullUrl = $"{SERVER_URL}/{url}";
-        Debug.Log($"GetRequest: {url}");
+        Debug.Log($"GetRequest {url}");
         using (var webRequest = UnityWebRequest.Get(fullUrl))
         {
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log($"GetResponse: {webRequest.downloadHandler.text}");
+                Debug.Log($"GetResponse {url}: Response: {webRequest.downloadHandler.text}");
                 successAction(webRequest.downloadHandler.text);
             }
             else
             {
-                Debug.Log($"GetError: {webRequest.downloadHandler.text}");
+                Debug.Log($"GetError {url}. Response: {webRequest.downloadHandler.text}");
                 errorAction(webRequest.downloadHandler.text);
             }
         }
@@ -75,7 +75,7 @@ public class ServerRequestManager : MonoBehaviour
         var fullUrl = $"{SERVER_URL}/{url}";
         using (var webRequest = UnityWebRequest.PostWwwForm(fullUrl, jsonData))
         {
-            Debug.Log($"PostRequest: {url}. Data: {jsonData}");
+            Debug.Log($"PostRequest {url}. Data: {jsonData}");
             var bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
             webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
             webRequest.downloadHandler = new DownloadHandlerBuffer();
@@ -85,12 +85,12 @@ public class ServerRequestManager : MonoBehaviour
 
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log($"PostResponse: {webRequest.downloadHandler.text}");
+                Debug.Log($"PostResponse {url}. Response: {webRequest.downloadHandler.text}");
                 successAction(webRequest.downloadHandler.text);
             }
             else
             {
-                Debug.Log($"PostError: {webRequest.downloadHandler.text}");
+                Debug.Log($"PostError {url}. Response: {webRequest.downloadHandler.text}");
                 errorAction(webRequest.downloadHandler.text);
             }
         }

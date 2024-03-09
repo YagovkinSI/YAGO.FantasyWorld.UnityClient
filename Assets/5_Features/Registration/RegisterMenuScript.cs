@@ -28,6 +28,12 @@ public partial class RegisterMenuScript : MonoBehaviour
             InvokeRegistred,
             InvokeError
         );
+
+        if (_gameData.AuthorizationData.IsAuthorized)
+        {
+            var loginData = new LoginRequest { UserName = _login.text, Password = _password.text };
+            _gameData.SaveAuthorizationData(loginData);
+        }
     }
 
     private void InvokeRegisterLoading(bool state) => OnLoadingChanged?.Invoke("RegisterMenu", state);
