@@ -1,6 +1,7 @@
-using Assets._7_Shared.EventHandlers;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using YAGO.FantasyWorld.Domain.Entities;
 using YAGO.FantasyWorld.Domain.Organizations;
@@ -12,13 +13,14 @@ public class GameData : MonoBehaviour
     private static GameData _instance;
 
     [SerializeField] private ServerRequestManager _serverRequestManager;
+    [SerializeField] private GameObject _loading;
+    [SerializeField] private GameObject _error;
+
+    private readonly List<string> _loadings = new();
 
     public AuthorizationData AuthorizationData { get; private set; }
     public Organization[] Organizations { get; private set; }
     public QuestData QuestData { get; private set; }
-
-    public event EventHandlersHelper.LoadingStateEventHandler OnLoadingChanged;
-    public event EventHandlersHelper.ErrorEventHandler OnError;
 
     public delegate void AuthorizationDataEventHandler(AuthorizationData authorizationData);
     public event AuthorizationDataEventHandler OnAuthorizationDataChanged;
@@ -66,7 +68,7 @@ public class GameData : MonoBehaviour
                 jsonData,
                 (state) => LoadingChange("GameData_UseSavedAuthorizationData", state),
                 SetAuthorizationData,
-                (error) => OnError?.Invoke($"Не удалось подключится по сохраненным данным авторизации. {error}")
+                (error) => ShowError($"Не удалось подключится по сохраненным данным авторизации. {error}")
             );
         }
     }
@@ -80,8 +82,6 @@ public class GameData : MonoBehaviour
             ShowError
         );
     }
-
-    private void LoadingChange(string key, bool state) => OnLoadingChanged?.Invoke(key, state);
 
     public void SetAuthorizationData(string jsonData)
     {
@@ -146,8 +146,6 @@ public class GameData : MonoBehaviour
         OnQuestDataChanged?.Invoke(QuestData);
     }
 
-    private void ShowError(string errorMessage) => OnError?.Invoke(errorMessage);
-
     internal void ResetQuest()
     {
         QuestData = null;
@@ -159,5 +157,23 @@ public class GameData : MonoBehaviour
     {
         var token = CryptoHelper.Encrypt(loginRequest);
         PlayerPrefs.SetString("token", token);
+    }
+
+    private void LoadingChange(string key, bool state)
+    {
+        if (state && !_loadings.Contains(key))
+            _loadings.Add(key);
+
+        if (!state && _loadings.Contains(key))
+            _loadings.Remove(key);
+
+        _loading.SetActive(_loadings.Any());
+    }
+
+    private void ShowError(string errorMessage)
+    {
+        var textComponent = _error.GetComponentInChildren<TMP_Text>();
+        textComponent.text = errorMessage;
+        _error.SetActive(true);
     }
 }

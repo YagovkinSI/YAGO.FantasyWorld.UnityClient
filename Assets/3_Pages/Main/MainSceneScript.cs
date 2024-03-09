@@ -25,8 +25,6 @@ public class MainSceneScript : MonoBehaviour
 
     private void Start()
     {
-        _gameData.OnLoadingChanged += LoadingChange;
-        _gameData.OnError += ShowError;
         _gameData.Initialize();
 
         _user.OnLoadingStateChanged += LoadingChange;

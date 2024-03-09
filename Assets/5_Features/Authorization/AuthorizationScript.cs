@@ -20,8 +20,6 @@ public class UserWidgetScript : MonoBehaviour
 
     public void Initialize()
     {
-        _gameData.OnLoadingChanged += LoadingChange;
-        _gameData.OnError += ShowError;
         _gameData.OnAuthorizationDataChanged += ChangeUser;
 
         _loginMenu.OnLoadingChanged += LoadingChange;
