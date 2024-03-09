@@ -39,9 +39,7 @@ public class GameData : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start() => InitializeManager();
-
-    private void InitializeManager()
+    public void Initialize()
     {
         GetCurrentUser();
         GetOrganizations();
@@ -53,11 +51,11 @@ public class GameData : MonoBehaviour
         if (string.IsNullOrEmpty(savedToken))
         {
             _serverRequestManager.SendGetRequest(
-                    "Authorization/getCurrentUser",
-                    (state) => LoadingChange("GameData_GetCurrentUser", state),
-                    SetAuthorizationData,
-                    ShowError
-                );
+                "Authorization/getCurrentUser",
+                (state) => LoadingChange("GameData_GetCurrentUser", state),
+                SetAuthorizationData,
+                ShowError
+            );
         }
         else
         {
@@ -76,11 +74,11 @@ public class GameData : MonoBehaviour
     private void GetOrganizations()
     {
         _serverRequestManager.SendGetRequest(
-                    "Organization/getOrganizations",
-                    (state) => LoadingChange("GameData_GetOrganizations", state),
-                    SetOrganizationsData,
-                    ShowError
-                );
+            "Organization/getOrganizations",
+            (state) => LoadingChange("GameData_GetOrganizations", state),
+            SetOrganizationsData,
+            ShowError
+        );
     }
 
     private void LoadingChange(string key, bool state) => OnLoadingChanged?.Invoke(key, state);

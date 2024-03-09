@@ -18,9 +18,16 @@ public class MainSceneScript : MonoBehaviour
 
     private readonly List<string> _loadings = new();
 
-    private void Start()
+    private void Awake()
     {
         InitStartPage();
+    }
+
+    private void Start()
+    {
+        _gameData.OnLoadingChanged += LoadingChange;
+        _gameData.OnError += ShowError;
+        _gameData.Initialize();
 
         _user.OnLoadingStateChanged += LoadingChange;
         _user.OnError += ShowError;

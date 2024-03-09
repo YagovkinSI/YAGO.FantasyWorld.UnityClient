@@ -2,6 +2,7 @@ using Assets._7_Shared.EventHandlers;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
+using YAGO.FantasyWorld.Domain.Users;
 
 public partial class LoginMenuScript : MonoBehaviour
 {
