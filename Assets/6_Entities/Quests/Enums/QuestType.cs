@@ -1,9 +1,9 @@
 ﻿namespace YAGO.FantasyWorld.Domain.Quests.Enums
 {
     /// <summary>
-    /// Статус квеста
+    /// Тип квеста
     /// </summary>
-    public enum QuestStatus
+    public enum QuestType
     {
         /// <summary>
         /// Неизвестно
@@ -11,13 +11,8 @@
         Unknown = 0,
 
         /// <summary>
-        /// Создано
+        /// Базовый квест
         /// </summary>
-        Created = 1,
-
-        /// <summary>
-        /// Завершено
-        /// </summary>
-        Completed = 2
+        BaseQuest = 1
     }
 }

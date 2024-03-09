@@ -1,4 +1,5 @@
 using Assets._7_Shared.EventHandlers;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public partial class RegisterMenuScript : MonoBehaviour
     public void OnRegisterClick()
     {
         var data = new RegisterRequest { UserName = _login.text, Password = _password.text, PasswordConfirm = _confirmPassword.text };
-        var jsonData = JsonUtility.ToJson(data);
+        var jsonData = JsonConvert.SerializeObject(data);
 
         _serverRequestManager.SendPostRequest(
             "Authorization/register",

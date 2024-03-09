@@ -1,10 +1,22 @@
-﻿namespace Assets._6_Entities.Quests
+﻿namespace YAGO.FantasyWorld.Domain.Quests
 {
     /// <summary>
     /// Вариант решения квеста
     /// </summary>
     public class QuestOption
     {
+        public QuestOption(int id, string text, QuestOptionResult[] questOptionResults)
+        {
+            Id = id;
+            Text = text;
+            QuestOptionResults = questOptionResults;
+        }
+
+        public QuestOption() { }
+
+        /// <summary>
+        /// Идентификатор опции квеста
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>

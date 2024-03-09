@@ -1,10 +1,18 @@
-﻿namespace Assets._6_Entities.Quests
+﻿namespace YAGO.FantasyWorld.Domain.Quests
 {
     /// <summary>
     /// Данные квеста с деталаями
     /// </summary>
     public class QuestWithDetails
     {
+        public QuestWithDetails(Quest quest, QuestDetails details)
+        {
+            Quest = quest;
+            Details = details;
+        }
+
+        public QuestWithDetails() { }
+
         /// <summary>
         /// Данные квеста
         /// </summary>

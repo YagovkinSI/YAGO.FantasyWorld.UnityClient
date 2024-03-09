@@ -1,7 +1,7 @@
 using Assets._7_Shared.EventHandlers;
-using Assets.Models;
 using System.Collections.Generic;
 using UnityEngine;
+using YAGO.FantasyWorld.Domain.Organizations;
 
 public class MapWidgetScript : MonoBehaviour
 {

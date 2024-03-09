@@ -1,8 +1,9 @@
 using Assets._7_Shared.Models;
 using Assets._7_Shared.PrefabScripts.Page.Models;
-using Assets.Models;
 using System.Linq;
 using UnityEngine;
+using YAGO.FantasyWorld.Domain.Organizations;
+using YAGO.FantasyWorld.Domain.Users;
 
 public class OrganizationInfo : MonoBehaviour
 {

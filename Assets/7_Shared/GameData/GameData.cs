@@ -1,9 +1,11 @@
-using Assets._6_Entities.Quests;
 using Assets._7_Shared.EventHandlers;
-using Assets.Models;
 using Newtonsoft.Json;
 using System.Linq;
 using UnityEngine;
+using YAGO.FantasyWorld.Domain.Entities;
+using YAGO.FantasyWorld.Domain.Organizations;
+using YAGO.FantasyWorld.Domain.Quests;
+using YAGO.FantasyWorld.Domain.Users;
 
 public class GameData : MonoBehaviour
 {
@@ -60,7 +62,7 @@ public class GameData : MonoBehaviour
         else
         {
             var request = CryptoHelper.Decrypt<LoginRequest>(savedToken);
-            var jsonData = JsonUtility.ToJson(request);
+            var jsonData = JsonConvert.SerializeObject(request);
             _serverRequestManager.SendPostRequest(
                 "Authorization/login",
                 jsonData,
@@ -121,7 +123,7 @@ public class GameData : MonoBehaviour
         AuthorizationData = authorizationData;
 
         var organization = Organizations.Single(o => o.Id == authorizationData.User.OrganizationId);
-        organization.UserLink = new Link<string> { Id = authorizationData.User.Id, Name = authorizationData.User.Name };
+        organization.UserLink = new EntityLink<string>(authorizationData.User.Id, YAGO.FantasyWorld.Domain.Entities.Enums.EntityType.Unknown, authorizationData.User.Name);
 
         GetQuest();
 

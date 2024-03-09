@@ -1,7 +1,7 @@
 using Assets._7_Shared.EventHandlers;
-using Assets.Models;
 using TMPro;
 using UnityEngine;
+using YAGO.FantasyWorld.Domain.Users;
 
 public class UserWidgetScript : MonoBehaviour
 {

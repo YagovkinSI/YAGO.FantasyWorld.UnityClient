@@ -1,4 +1,5 @@
 using Assets._7_Shared.EventHandlers;
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public partial class LoginMenuScript : MonoBehaviour
     public void OnLoginClick()
     {
         var data = new LoginRequest { UserName = _login.text, Password = _password.text };
-        var jsonData = JsonUtility.ToJson(data);
+        var jsonData = JsonConvert.SerializeObject(data);
 
         _serverRequestManager.SendPostRequest(
             "Authorization/login",

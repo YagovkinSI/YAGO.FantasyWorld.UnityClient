@@ -1,10 +1,10 @@
-using Assets._4_Widgets.Quest.Models;
-using Assets._6_Entities.Quests;
 using Assets._7_Shared.EventHandlers;
 using Assets._7_Shared.Models;
 using Assets._7_Shared.PrefabScripts.Page.Models;
+using Newtonsoft.Json;
 using System.Linq;
 using UnityEngine;
+using YAGO.FantasyWorld.Domain.Quests;
 
 public class QuestWidget : MonoBehaviour
 {
@@ -71,7 +71,7 @@ public class QuestWidget : MonoBehaviour
             QuestId = _gameData.QuestData.QuestWithDetails.Quest.Id,
             QuestOptionId = optionId
         };
-        var jsonData = JsonUtility.ToJson(request);
+        var jsonData = JsonConvert.SerializeObject(request);
         _serverRequestManager.SendPostRequest(
                 "Quest/setQuestOption",
                 jsonData,

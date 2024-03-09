@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -10,7 +11,7 @@ public class CryptoHelper : MonoBehaviour
 
     public static string Encrypt<T>(T data)
     {
-        var json = JsonUtility.ToJson(data);
+        var json = JsonConvert.SerializeObject(data);
         using (var aesAlg = Aes.Create())
         {
             aesAlg.Key = key;
@@ -48,7 +49,7 @@ public class CryptoHelper : MonoBehaviour
                     using (var srDecrypt = new StreamReader(csDecrypt))
                     {
                         var json = srDecrypt.ReadToEnd();
-                        return JsonUtility.FromJson<T>(json);
+                        return JsonConvert.DeserializeObject<T>(json);
                     }
                 }
             }
