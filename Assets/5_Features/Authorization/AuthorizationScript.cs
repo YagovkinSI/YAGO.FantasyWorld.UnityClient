@@ -7,7 +7,6 @@ public class UserWidgetScript : MonoBehaviour
 {
     private const string LABEL_TEXT_ATTENTION = "!";
 
-    [SerializeField] private ServerRequestManager _serverRequestManager;
     [SerializeField] private GameData _gameData;
 
     [SerializeField] private TextMeshProUGUI _labelText;
@@ -22,9 +21,6 @@ public class UserWidgetScript : MonoBehaviour
     {
         _gameData.OnAuthorizationDataChanged += ChangeUser;
 
-        _loginMenu.OnLoadingChanged += LoadingChange;
-        _loginMenu.OnError += ShowError;
-
         _registerMenu.OnLoadingChanged += LoadingChange;
         _registerMenu.OnError += ShowError;
     }
@@ -32,7 +28,11 @@ public class UserWidgetScript : MonoBehaviour
     private void ChangeUser(AuthorizationData authorizationData)
     {
         if (authorizationData.IsAuthorized)
+        {
             _labelText.text = authorizationData.User.Name[0].ToString();
+            _loginMenu.gameObject.SetActive(false);
+            _registerMenu.gameObject.SetActive(false);
+        }
         else
             _labelText.text = LABEL_TEXT_ATTENTION;
     }

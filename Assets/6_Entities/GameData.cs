@@ -1,8 +1,10 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using YAGO.FantasyWorld.Domain.Entities;
 using YAGO.FantasyWorld.Domain.Organizations;
 using YAGO.FantasyWorld.Domain.Quests;
@@ -175,5 +177,28 @@ public class GameData : MonoBehaviour
         var textComponent = _error.GetComponentInChildren<TMP_Text>();
         textComponent.text = errorMessage;
         _error.SetActive(true);
+    }
+
+    internal void Login(string login, string password)
+    {
+        var request = new LoginRequest { UserName = login, Password = password };
+        var jsonData = JsonConvert.SerializeObject(request);
+
+        _serverRequestManager.SendPostRequest(
+            "Authorization/login",
+            jsonData,
+            (state) => LoadingChange("GameData_Login", state),
+            (state) => SetLogin(state, request),
+            ShowError
+        );
+    }
+
+    private void SetLogin(string jsonData, LoginRequest request)
+    {
+        SetAuthorizationData(jsonData);
+        if (AuthorizationData.IsAuthorized)
+        {
+            SaveAuthorizationData(request);
+        }
     }
 }
