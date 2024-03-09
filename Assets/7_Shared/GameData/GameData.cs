@@ -109,8 +109,11 @@ public class GameData : MonoBehaviour
 
     public void TakeOrganizationForCurrentUser(long organizationId)
     {
-        _serverRequestManager.SendGetRequest(
-                $"Organization/setCurrentUserForOrganization/?organizationId={organizationId}",
+        var request = new SetOrganizationUserRequest { OrganizationId = organizationId };
+        var jsonData = JsonConvert.SerializeObject(request);
+        _serverRequestManager.SendPostRequest(
+                $"Organization/setCurrentUserForOrganization",
+                jsonData,
                 (state) => LoadingChange("GameData_TakeOrganizationForCurrentUser", state),
                 SetOrganizationTaked,
                 ShowError
