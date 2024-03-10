@@ -12,7 +12,7 @@ public partial class GameData : MonoBehaviour
 
     public void GetQuest() => SendRequest(RequestType.Get, "Quest/getQuest", SetQuestData);
 
-    public void ShowOptionDetails(int optionId)
+    public void SetOption(int optionId)
     {
         var request = new SetQuestOptionRequest
         {
