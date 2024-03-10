@@ -1,12 +1,26 @@
 ﻿using System;
 
-namespace Assets._6_Entities.Quests
+namespace YAGO.FantasyWorld.Domain.Quests
 {
     /// <summary>
     /// Данные квеста
     /// </summary>
     public class QuestData
     {
+        public QuestData(QuestWithDetails quest)
+        {
+            IsQuestReady = true;
+            QuestWithDetails = quest;
+        }
+
+        public QuestData(DateTimeOffset questReadyDateTime)
+        {
+            IsQuestReady = false;
+            QuestReadyDateTime = questReadyDateTime;
+        }
+
+        public QuestData() { }
+
         /// <summary>
         /// Флаг готовности квеста
         /// </summary>

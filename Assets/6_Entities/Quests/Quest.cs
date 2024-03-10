@@ -1,7 +1,7 @@
-﻿using Assets._6_Entities.Quests.Enums;
-using System;
+﻿using System;
+using YAGO.FantasyWorld.Domain.Quests.Enums;
 
-namespace Assets._6_Entities.Quests
+namespace YAGO.FantasyWorld.Domain.Quests
 {
     /// <summary>
     /// Данные квеста

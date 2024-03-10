@@ -1,10 +1,28 @@
-﻿namespace Assets._6_Entities.Quests
+﻿using YAGO.FantasyWorld.Domain.Entities;
+using YAGO.FantasyWorld.Domain.Quests.Enums;
+
+namespace YAGO.FantasyWorld.Domain.Quests
 {
     /// <summary>
     /// Результат решения квеста
     /// </summary>
     public class QuestOptionResult
     {
+        public QuestOptionResult(QuestOptionResultType type, string text, int weight, EntityChange[] entitiesChange)
+        {
+            Type = type;
+            Text = text;
+            Weight = weight;
+            EntitiesChange = entitiesChange;
+        }
+
+        public QuestOptionResult() { }
+
+        /// <summary>
+        /// Тип результата
+        /// </summary>
+        public QuestOptionResultType Type { get; set; }
+
         /// <summary>
         /// Описание результа
         /// </summary>
@@ -18,6 +36,6 @@
         /// <summary>
         /// Изменения параметров сущностей по результатам
         /// </summary>
-        public QuestOptionResultEntity[] QuestOptionResultEntities { get; set; }
+        public EntityChange[] EntitiesChange { get; set; }
     }
 }

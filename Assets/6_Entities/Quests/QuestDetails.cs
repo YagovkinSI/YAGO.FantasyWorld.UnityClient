@@ -1,4 +1,4 @@
-﻿namespace Assets._6_Entities.Quests
+﻿namespace YAGO.FantasyWorld.Domain.Quests
 {
     /// <summary>
     /// Детали квеста
@@ -14,6 +14,5 @@
         /// Варианты решения
         /// </summary>
         public QuestOption[] QuestOptions { get; set; }
-
     }
 }
