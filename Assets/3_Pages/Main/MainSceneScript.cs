@@ -11,7 +11,7 @@ public class MainSceneScript : MonoBehaviour
     [SerializeField] private GameObject _error;
 
     [SerializeField] private GameData _gameData;
-    [SerializeField] private UserWidgetScript _user;
+    [SerializeField] private AuthorizationScript _authorization;
     [SerializeField] private MapWidgetScript _map;
     [SerializeField] private OrganizationInfo _organizationInfo;
     [SerializeField] private QuestWidget _questWidget;
@@ -27,16 +27,9 @@ public class MainSceneScript : MonoBehaviour
     {
         _gameData.Initialize();
 
-        _user.OnLoadingStateChanged += LoadingChange;
-        _user.OnError += ShowError;
-        _user.Initialize();
-
+        _authorization.Initialize();
         _map.Initialize();
-
-        _questWidget.OnLoadingStateChanged += LoadingChange;
-        _questWidget.OnError += ShowError;
         _questWidget.Initialize();
-
         _organizationInfo.Initialize();
 
         _map.OnOrganizationSelected += ShowOrganizationPage;

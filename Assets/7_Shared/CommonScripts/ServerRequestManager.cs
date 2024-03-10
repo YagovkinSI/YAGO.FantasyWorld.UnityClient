@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using YAGO.FantasyWorld.UnityCLient.CommonScripts.Enums;
 
 public class ServerRequestManager : MonoBehaviour
 {
@@ -14,12 +15,6 @@ public class ServerRequestManager : MonoBehaviour
 #if DEBUG
         SERVER_URL = "https://localhost:44323";
 #endif
-    }
-
-    public enum RequestType
-    {
-        Get,
-        Post
     }
 
     public void SendGetRequest(string url, Action<bool> loadingAction, Action<string> successAction, Action<string> errorAction)

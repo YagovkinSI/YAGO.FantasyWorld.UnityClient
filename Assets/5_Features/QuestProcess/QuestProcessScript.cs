@@ -1,19 +1,13 @@
-using Assets._7_Shared.EventHandlers;
 using Assets._7_Shared.Models;
 using Assets._7_Shared.PrefabScripts.Page.Models;
-using Newtonsoft.Json;
 using System.Linq;
 using UnityEngine;
 using YAGO.FantasyWorld.Domain.Quests;
 
 public class QuestWidget : MonoBehaviour
 {
-    [SerializeField] private ServerRequestManager _serverRequestManager;
     [SerializeField] private GameData _gameData;
     [SerializeField] private PageScript _page;
-
-    public event EventHandlersHelper.LoadingStateEventHandler OnLoadingStateChanged;
-    public event EventHandlersHelper.ErrorEventHandler OnError;
 
     public void Initialize()
     {
@@ -66,28 +60,6 @@ public class QuestWidget : MonoBehaviour
     private void ShowOptionDetails(int optionId)
     {
         _page.SetActive(false);
-        var request = new SetQuestOptionRequest
-        {
-            QuestId = _gameData.QuestData.QuestWithDetails.Quest.Id,
-            QuestOptionId = optionId
-        };
-        var jsonData = JsonConvert.SerializeObject(request);
-        _serverRequestManager.SendPostRequest(
-                "Quest/setQuestOption",
-                jsonData,
-                InvokeLoginLoading,
-                InvokeQuestEnd,
-                InvokeError
-            );
+        _gameData.ShowOptionDetails(optionId);
     }
-
-    private void InvokeLoginLoading(bool state) => OnLoadingStateChanged?.Invoke("Request_Quest_SetQuestOption", state);
-
-    private void InvokeQuestEnd(string jsonData)
-    {
-        _gameData.ResetQuest();
-        OnError?.Invoke(jsonData);
-    }
-
-    private void InvokeError(string errorMessage) => OnError?.Invoke(errorMessage);
 }
