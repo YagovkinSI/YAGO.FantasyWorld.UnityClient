@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using YAGO.FantasyWorld.Domain.Quests;
 
-public class QuestWidget : MonoBehaviour
+public class QuestProcessScript : MonoBehaviour
 {
     [SerializeField] private GameData _gameData;
     [SerializeField] private PageScript _page;

@@ -1,4 +1,3 @@
-using Assets._7_Shared.EventHandlers;
 using System.Collections.Generic;
 using UnityEngine;
 using YAGO.FantasyWorld.Domain.Organizations;
@@ -8,11 +7,11 @@ public class MapWidgetScript : MonoBehaviour
     [SerializeField] private GameData _gameData;
     [SerializeField] private GameObject _content;
 
+    [SerializeField] private ShowOrganizationScript _organizationInfo;
+
     [SerializeField] private GameObject _organizationPrefab;
 
     private readonly List<IconLabelScript> _organizations = new();
-
-    public event EventHandlersHelper.ItemSelectedEventHandler<long> OnOrganizationSelected;
 
     private readonly Dictionary<long, Vector3> organizationsPositions = new()
     {
@@ -65,7 +64,7 @@ public class MapWidgetScript : MonoBehaviour
         }
     }
 
-    private void OnClick(long id) => OnOrganizationSelected.Invoke(id);
+    private void OnClick(long id) => _organizationInfo.ShowOrganizationPage(id);
 
     private void OnDestroy()
     {

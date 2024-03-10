@@ -5,7 +5,7 @@ using UnityEngine;
 using YAGO.FantasyWorld.Domain.Organizations;
 using YAGO.FantasyWorld.Domain.Users;
 
-public class OrganizationInfo : MonoBehaviour
+public class ShowOrganizationScript : MonoBehaviour
 {
     [SerializeField] private PageScript _page;
     private long _currentOrganizationId;

@@ -45,11 +45,7 @@ public partial class GameData : MonoBehaviour
         var authorizationData = JsonConvert.DeserializeObject<AuthorizationData>(jsonData);
         AuthorizationData = authorizationData;
         OnAuthorizationDataChanged?.Invoke(AuthorizationData);
-
-        if (authorizationData.IsAuthorized)
-        {
-            GetQuest();
-        }
+        ResetQuest();
     }
 
     private void SetLogin(string jsonData, LoginRequest request)

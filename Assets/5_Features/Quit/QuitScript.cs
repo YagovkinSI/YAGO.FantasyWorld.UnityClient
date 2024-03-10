@@ -2,7 +2,7 @@ using Assets._7_Shared.Models;
 using Assets._7_Shared.PrefabScripts.Page.Models;
 using UnityEngine;
 
-public class QuitWidgetScript : MonoBehaviour
+public class QuitScript : MonoBehaviour
 {
     [SerializeField] private PageScript _page;
 

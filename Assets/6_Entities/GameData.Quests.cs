@@ -34,12 +34,12 @@ public partial class GameData : MonoBehaviour
     {
         QuestData = null;
         GetQuest();
-        GetOrganizations();
     }
 
     private void InvokeQuestEnd(string jsonData)
     {
         ResetQuest();
+        GetOrganizations();
         ShowError(jsonData);
     }
 }
