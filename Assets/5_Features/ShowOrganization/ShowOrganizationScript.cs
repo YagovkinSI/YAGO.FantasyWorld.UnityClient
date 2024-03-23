@@ -34,7 +34,7 @@ public class ShowOrganizationScript : MonoBehaviour
         {
             Tittle = organization.Name,
             ImagePath = $"Images/OrganizationHerbs/{organization.Id}",
-            Text = info,
+            ShortText = info,
             ButtonSettings = new ButtonSettings[] { buttonSettings }
         };
         _page.Initialize(pageSettings);

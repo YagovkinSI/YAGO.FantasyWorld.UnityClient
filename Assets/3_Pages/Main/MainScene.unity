@@ -483,7 +483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55b8299b996afd74bb1c5953d069a63f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _serverRequestManager: {fileID: 882174915}
   _gameData: {fileID: 882174914}
   _labelText: {fileID: 1933439558}
   _loginMenu: {fileID: 369227478}
@@ -1581,6 +1580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameData: {fileID: 882174914}
   _content: {fileID: 1823007289}
+  _organizationInfo: {fileID: 1892953846}
   _organizationPrefab: {fileID: 2946908420384814786, guid: b9c33d436c7f51d4eaa7ba263de7cb8a,
     type: 3}
 --- !u!1 &473018825
@@ -1707,9 +1707,9 @@ MonoBehaviour:
   _loading: {fileID: 272312993}
   _error: {fileID: 1877489811}
   _gameData: {fileID: 882174914}
-  _user: {fileID: 23235417}
-  _map: {fileID: 468337217}
   _organizationInfo: {fileID: 1892953846}
+  _authorization: {fileID: 23235417}
+  _map: {fileID: 468337217}
   _questWidget: {fileID: 552996719}
 --- !u!1 &549557908
 GameObject:
@@ -1897,7 +1897,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197dc8ed7eb1ab94e8befdb56a541d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _serverRequestManager: {fileID: 882174915}
   _gameData: {fileID: 882174914}
   _page: {fileID: 868464245}
 --- !u!224 &552996720
@@ -2986,8 +2985,6 @@ MonoBehaviour:
   _login: {fileID: 866321761}
   _password: {fileID: 143976495}
   _confirmPassword: {fileID: 556957854}
-  _registerMenu: {fileID: 866321758}
-  _serverRequestManager: {fileID: 882174915}
   _gameData: {fileID: 882174914}
 --- !u!114 &866321761 stripped
 MonoBehaviour:
@@ -3050,6 +3047,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serverRequestManager: {fileID: 882174915}
+  _loading: {fileID: 272312993}
+  _error: {fileID: 1877489811}
 --- !u!114 &882174915
 MonoBehaviour:
   m_ObjectHideFlags: 0

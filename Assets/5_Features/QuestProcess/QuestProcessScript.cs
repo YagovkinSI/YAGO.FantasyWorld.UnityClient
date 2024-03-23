@@ -38,7 +38,7 @@ public class QuestProcessScript : MonoBehaviour
         {
             Tittle = "Совет",
             ImagePath = $"Images/Quests/{(int)questWithDetails.Quest.Type}/Main",
-            Text = questWithDetails.Details.QuestText,
+            ShortText = questWithDetails.Details.QuestText,
             ButtonSettings = optionButtons
         };
         _page.Initialize(pageSettings);
@@ -51,7 +51,7 @@ public class QuestProcessScript : MonoBehaviour
         {
             Tittle = "Ожидание совета",
             ImagePath = "Images/Quests/Common/QuestTimeout",
-            Text = "Совет соберётся через пару минут...",
+            ShortText = "Совет соберётся через пару минут...",
             ButtonSettings = new ButtonSettings[]
             {
                 new("Понятно", true, () => _page.SetActive(false))
@@ -75,7 +75,7 @@ public class QuestProcessScript : MonoBehaviour
         {
             Tittle = option.Text,
             ImagePath = $"Images/Quests/{(int)_gameData.QuestData.QuestWithDetails.Quest.Type}/Main",
-            Text = text,
+            ShortText = text,
             ButtonSettings = new ButtonSettings[]
             {
                 new("Принять", true, () => SetOption(optionId)),
