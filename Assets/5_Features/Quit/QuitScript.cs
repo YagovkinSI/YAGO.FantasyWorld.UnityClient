@@ -11,7 +11,7 @@ public class QuitScript : MonoBehaviour
         var pageSettings = new PageSettings
         {
             Tittle = "Выход",
-            Text = "Выйти из игры?",
+            ShortText = "Выйти из игры?",
             ImagePath = "Images/Common/Quit",
             ButtonSettings = new ButtonSettings[]
             {

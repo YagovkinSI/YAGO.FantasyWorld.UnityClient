@@ -2,12 +2,10 @@
 
 namespace Assets._7_Shared.PrefabScripts.Page.Models
 {
-    public class PageSettings
+    public class PageOptionsSettings
     {
         public string Tittle { get; set; }
-        public string ImagePath { get; set; }
         public string ShortText { get; set; }
-        public string FullText { get; set; }
         public ButtonSettings[] ButtonSettings { get; set; }
     }
 }
