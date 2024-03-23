@@ -1,4 +1,5 @@
 using Assets._7_Shared.Models;
+using System.Linq;
 using UnityEngine;
 
 public class ButtonGroupScript : MonoBehaviour
@@ -11,15 +12,11 @@ public class ButtonGroupScript : MonoBehaviour
         foreach (var button in _buttons)
             button.gameObject.SetActive(false);
 
-        var currButtonIndex = 2;
-        for (var i = buttonSettingsList.Length - 1; i >= 0; i--)
+        for (var i = 0; i < buttonSettingsList.Length; i++)
         {
-            var button = _buttons[currButtonIndex];
+            var button = _buttons[i];
+            button.gameObject.SetActive(true);
             button.Initialize(buttonSettingsList[i]);
-            currButtonIndex--;
-
-            if (currButtonIndex == 0)
-                break;
         }
     }
 }
