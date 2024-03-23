@@ -9,7 +9,7 @@ public class PageScript : MonoBehaviour
     [SerializeField] private TMP_Text _title;
     [SerializeField] private Image _image;
     [SerializeField] private TMP_Text _info;
-    [SerializeField] private ButtonScript _buttonScript;
+    [SerializeField] private ButtonGroupScript _buttonGroupScript;
     [SerializeField] private GameObject _moreInfoButton;
     [SerializeField] private PageTextScript _pageTextScript;
     [SerializeField] private PageOptionsScript _pageOptionsScript;
@@ -43,15 +43,10 @@ public class PageScript : MonoBehaviour
 
     private void SetOptions(PageSettings pageSettings)
     {
-        if (pageSettings.ButtonSettings.Length == 0)
-            return;
-
-        _buttonScript.gameObject.SetActive(true);
-        _buttonScript.Action = () => _pageOptionsScript.SetActive(true);
-
-        if (pageSettings.ButtonSettings.Length == 1)
+        if (pageSettings.ButtonSettings.Length <= 3)
         {
-            _buttonScript.Initialize(pageSettings.ButtonSettings[0]);
+            
+            _buttonGroupScript.Initialize(pageSettings.ButtonSettings);
         }
         else
         {
@@ -62,6 +57,10 @@ public class PageScript : MonoBehaviour
                 ButtonSettings = pageSettings.ButtonSettings
             };
             _pageOptionsScript.Initialize(pageOptionsSettings);
+            _buttonGroupScript.Initialize(new ButtonSettings[]
+            {
+                new("Варианты", true, () => _pageOptionsScript.SetActive(true))
+            });
         }
     }
 
