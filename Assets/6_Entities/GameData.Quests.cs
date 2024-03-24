@@ -7,9 +7,6 @@ public partial class GameData : MonoBehaviour
 {
     public QuestData QuestData { get; private set; }
 
-    public delegate void QuestDataEventHandler(QuestData questData);
-    public event QuestDataEventHandler OnQuestDataChanged;
-
     public void GetQuest() => SendRequest(RequestType.Get, "Quest/getQuest", SetQuestData);
 
     public void SetOption(int optionId)
@@ -27,7 +24,6 @@ public partial class GameData : MonoBehaviour
     {
         var questData = JsonConvert.DeserializeObject<QuestData>(jsonData);
         QuestData = questData;
-        OnQuestDataChanged?.Invoke(QuestData);
     }
 
     private void ResetQuest()

@@ -1,7 +1,11 @@
 using Assets._7_Shared.Models;
 using Assets._7_Shared.PrefabScripts.Page.Models;
+using System;
 using System.Linq;
 using UnityEngine;
+using YAGO.FantasyWorld.Domain.Entities.Enums;
+using YAGO.FantasyWorld.Domain.Entities;
+using YAGO.FantasyWorld.Domain.HistoryEvents;
 using YAGO.FantasyWorld.Domain.Organizations;
 using YAGO.FantasyWorld.Domain.Users;
 
@@ -30,12 +34,14 @@ public class ShowOrganizationScript : MonoBehaviour
             canTakeOrganization,
             () => TakeOrganization(organization.Id));
 
+        var historyButton = new ButtonSettings("История", true, () => ShowHistory());
+
         var pageSettings = new PageSettings()
         {
             Tittle = organization.Name,
             ImagePath = $"Images/OrganizationHerbs/{organization.Id}",
             ShortText = info,
-            ButtonSettings = new ButtonSettings[] { buttonSettings }
+            ButtonSettings = new ButtonSettings[] { buttonSettings, historyButton }
         };
         _page.Initialize(pageSettings);
         _page.SetActive(true);
@@ -57,5 +63,30 @@ public class ShowOrganizationScript : MonoBehaviour
             return;
 
         ShowOrganizationPage(_currentOrganizationId);
+    }
+
+    private void ShowHistory()
+    {
+        var historyFilter = new HistoryEventFilter
+        {
+            DateTimeUtcMin = DateTimeOffset.MinValue,
+            Entities = new YagoEntity[]
+            {
+                new() { EntityType = EntityType.Organization, Id = _currentOrganizationId },
+            },
+            EventCount = 5,
+            PageNum = 1
+        };
+        _gameData.OnHistoryLoaded += ShowHistoryText;
+        _gameData.ShowHistory(historyFilter);
+    }
+
+    private void ShowHistoryText(string[] historyEvents)
+    {
+        _gameData.OnHistoryLoaded -= ShowHistoryText;
+        var text = historyEvents.Any()
+            ? string.Join("\r\n", historyEvents)
+            : "Об истории этого владения ничего неизвестно.";
+        _page.ShowPageText("Самые значимые события в прошлом", text);
     }
 }

@@ -1,13 +1,15 @@
 using Assets._7_Shared.Models;
 using Assets._7_Shared.PrefabScripts.Page.Models;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class PageScript : MonoBehaviour
 {
     [SerializeField] private TMP_Text _title;
-    [SerializeField] private Image _image;
+    [SerializeField] private UnityEngine.UI.Image _image;
     [SerializeField] private TMP_Text _info;
     [SerializeField] private ButtonGroupScript _buttonGroupScript;
     [SerializeField] private GameObject _moreInfoButton;
@@ -72,5 +74,16 @@ public class PageScript : MonoBehaviour
             _pageOptionsScript.SetActive(false);
         }
         gameObject.SetActive(isActive);
+    }
+
+    public void ShowPageText(string title, string text)
+    {
+        var pageTextSettings = new PageTextSettings()
+        {
+            Tittle = title,
+            Text = text
+        };
+        _pageTextScript.Initialize(pageTextSettings);
+        _pageTextScript.SetActive(true);
     }
 }
