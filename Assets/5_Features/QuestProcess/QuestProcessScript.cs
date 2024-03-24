@@ -17,7 +17,7 @@ public class QuestProcessScript : MonoBehaviour
 
     public void Initialize()
     {
-        _gameData.OnHistoryLoaded += ShowHistoryText;
+        // Method intentionally left empty.
     }
 
     public void ShowQuestWindow()
@@ -106,6 +106,7 @@ public class QuestProcessScript : MonoBehaviour
             EventCount = 5,
             PageNum = 1
         };
+        _gameData.OnHistoryLoaded += ShowHistoryText;
         _gameData.ShowHistory(historyFilter);
     }
 
@@ -155,6 +156,7 @@ public class QuestProcessScript : MonoBehaviour
 
     private void ShowHistoryText(string[] historyEvents)
     {
+        _gameData.OnHistoryLoaded -= ShowHistoryText;
         var text = historyEvents.Any()
             ? string.Join("\r\n", historyEvents)
             : "Нет общих событий";
